@@ -1,0 +1,14 @@
+# Copy these rules into jev.config.yaml before the default fallback.
+- id: deny-bulk-mail
+  action: deny
+  reason: Bulk recipients are not allowed through this gateway.
+  match:
+    tools: ["send_email", "gmail.send", "outlook.send"]
+    arguments:
+      bulk:
+        equals: true
+
+- id: review-outbound-mail
+  action: require_approval
+  match:
+    tools: ["send_email", "gmail.send", "outlook.send"]

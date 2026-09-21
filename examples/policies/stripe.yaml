@@ -1,0 +1,16 @@
+# Copy these rules into jev.config.yaml before the default fallback.
+- id: allow-stripe-reads
+  action: allow
+  match:
+    tools: ["stripe.get_*", "stripe.list_*"]
+
+- id: review-refunds
+  action: require_approval
+  reason: Refunds require a one-time human approval.
+  match:
+    tools: ["stripe.create_refund"]
+
+- id: deny-other-stripe-writes
+  action: deny
+  match:
+    tools: ["stripe.create_*", "stripe.update_*", "stripe.delete_*"]

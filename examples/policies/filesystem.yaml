@@ -1,0 +1,30 @@
+# Copy these rules into jev.config.yaml before the default fallback.
+- id: allow-filesystem-read
+  action: allow
+  match:
+    tools:
+      - read_file
+      - read_text_file
+      - read_media_file
+      - read_multiple_files
+      - list_directory
+      - list_directory_with_sizes
+      - search_files
+      - directory_tree
+      - get_file_info
+      - list_allowed_directories
+      - "filesystem.read_*"
+      - "filesystem.list_*"
+
+- id: review-filesystem-write
+  action: require_approval
+  match:
+    tools:
+      - write_file
+      - edit_file
+      - create_directory
+      - move_file
+      - delete_file
+      - "filesystem.write_*"
+      - "filesystem.move_*"
+      - "filesystem.delete_*"
