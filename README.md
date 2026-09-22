@@ -144,8 +144,13 @@ a separate append-only JSONL file.
 ## Development
 
 ```bash
-npm test
-npm run check
-npm run build
-npm pack --dry-run
+npm run release:check
 ```
+
+Configuration is validated before the upstream process starts. Unknown match
+fields, malformed condition operators, and invalid regular expressions fail
+closed with an error instead of being interpreted as a broader policy.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the development contract and
+[SECURITY.md](SECURITY.md) for the supported security boundary and reporting
+instructions.
