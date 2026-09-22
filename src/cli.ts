@@ -7,7 +7,7 @@ import { evaluatePolicy } from "./policy.js";
 import { fingerprint, runProxy } from "./proxy.js";
 import type { AuditRecord, JsonValue, ToolCall } from "./types.js";
 
-const VERSION = "0.1.0";
+const VERSION = "0.1.1";
 
 function usage(): string {
   return `jev-proxy ${VERSION} — policy firewall for MCP tools
