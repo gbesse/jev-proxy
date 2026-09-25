@@ -5,6 +5,7 @@ export type {
   ArgumentCondition,
   AuditRecord,
   Decision,
+  JsonType,
   JsonValue,
   PolicyMatch,
   PolicyResult,
