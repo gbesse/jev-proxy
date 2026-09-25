@@ -1,10 +1,11 @@
 import { readFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { parse } from "yaml";
-import type { Decision, JsonValue, ProxyConfig } from "./types.js";
+import type { Decision, JsonType, JsonValue, ProxyConfig } from "./types.js";
 
 const ACTIONS = new Set(["allow", "deny", "require_approval", "review"]);
-const CONDITION_KEYS = new Set(["equals", "notEquals", "matches", "contains", "startsWith", "endsWith", "oneOf", "exists"]);
+const CONDITION_KEYS = new Set(["equals", "notEquals", "matches", "contains", "startsWith", "endsWith", "oneOf", "exists", "isType"]);
+const JSON_TYPES = new Set<JsonType>(["string", "number", "boolean", "object", "array", "null"]);
 const MATCH_KEYS = new Set(["tools", "arguments"]);
 const AUDIT_KEYS = new Set(["path", "includeArguments", "redact"]);
 const APPROVAL_KEYS = new Set(["path"]);
@@ -45,6 +46,9 @@ function validateCondition(value: unknown, where: string): void {
   }
   if (condition.exists !== undefined && typeof condition.exists !== "boolean") {
     throw new Error(`${where}.exists must be a boolean`);
+  }
+  if (condition.isType !== undefined && (typeof condition.isType !== "string" || !JSON_TYPES.has(condition.isType as JsonType))) {
+    throw new Error(`${where}.isType must be string, number, boolean, object, array, or null`);
   }
   if (condition.oneOf !== undefined && (!Array.isArray(condition.oneOf) || !condition.oneOf.every(isJsonValue))) {
     throw new Error(`${where}.oneOf must be an array of JSON values`);
