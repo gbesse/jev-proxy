@@ -94,7 +94,8 @@ Tool names support `*` and `?` globs. Argument paths use dot notation. A value
 may be matched directly or with `equals`, `notEquals`, `matches`, `contains`,
 `startsWith`, `endsWith`, `oneOf`, `exists`, and `isType`. `isType` accepts
 `string`, `number`, `boolean`, `object`, `array`, or `null` and is useful for a
-small fail-closed shape check:
+small fail-closed shape check. Paths match only fields present in the JSON
+payload; inherited JavaScript object properties never count as fields:
 
 ```yaml
   - id: review-well-shaped-write
