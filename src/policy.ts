@@ -13,6 +13,7 @@ function getPath(object: Record<string, JsonValue>, path: string): JsonValue | u
   let current: JsonValue | undefined = object;
   for (const part of path.split(".")) {
     if (!current || typeof current !== "object" || Array.isArray(current)) return undefined;
+    if (!Object.hasOwn(current, part)) return undefined;
     current = current[part];
   }
   return current;

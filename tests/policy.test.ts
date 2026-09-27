@@ -43,6 +43,19 @@ test("supports nested argument paths", () => {
   assert.equal(evaluatePolicy(nested, { name: "deploy", arguments: { target: { environment: "production" } } }).decision, "allow");
 });
 
+test("matches only fields present in the JSON payload", () => {
+  const ownFields: ProxyConfig = {
+    version: 1,
+    default: "deny",
+    rules: [{ id: "own-field", action: "allow", match: { arguments: { "record.__proto__": { isType: "object" } } } }],
+  };
+  assert.equal(evaluatePolicy(ownFields, { name: "write", arguments: { record: {} } }).decision, "deny");
+  assert.equal(
+    evaluatePolicy(ownFields, { name: "write", arguments: JSON.parse('{"record":{"__proto__":{"id":"42"}}}') }).decision,
+    "allow",
+  );
+});
+
 test("matches JSON payload types without treating them as schemas", () => {
   const typed: ProxyConfig = {
     version: 1,
