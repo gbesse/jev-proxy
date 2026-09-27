@@ -52,3 +52,11 @@ test("fingerprints do not depend on object key order", () => {
   const right = { name: "tool", arguments: { b: 2, a: 1 } } satisfies ToolCall;
   assert.equal(fingerprint(left), fingerprint(right));
 });
+
+test("fingerprints bind nested payload values and their JSON types", () => {
+  const approved = { name: "write_record", arguments: { record: { id: "42", enabled: true } } } satisfies ToolCall;
+  const changedValue = { name: "write_record", arguments: { record: { id: "43", enabled: true } } } satisfies ToolCall;
+  const changedType = { name: "write_record", arguments: { record: { id: 42, enabled: true } } } satisfies ToolCall;
+  assert.notEqual(fingerprint(approved), fingerprint(changedValue));
+  assert.notEqual(fingerprint(approved), fingerprint(changedType));
+});

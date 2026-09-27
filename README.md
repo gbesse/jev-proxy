@@ -92,7 +92,27 @@ rules:
 
 Tool names support `*` and `?` globs. Argument paths use dot notation. A value
 may be matched directly or with `equals`, `notEquals`, `matches`, `contains`,
-`startsWith`, `endsWith`, `oneOf`, and `exists`.
+`startsWith`, `endsWith`, `oneOf`, `exists`, and `isType`. `isType` accepts
+`string`, `number`, `boolean`, `object`, `array`, or `null` and is useful for a
+small fail-closed shape check:
+
+```yaml
+  - id: review-well-shaped-write
+    action: require_approval
+    match:
+      tools: [write_record]
+      arguments:
+        record.id: { isType: string }
+        record.tags: { isType: array }
+        dryRun: { equals: true }
+```
+
+These predicates are policy matching, not JSON Schema validation: they do not
+reject unknown fields, enforce required fields outside the paths you list, or
+apply numeric/string constraints beyond the configured operators. Validate the
+full payload in the trusted tool implementation when a schema is part of its
+security boundary. A one-time approval still fingerprints the exact tool name
+and complete argument object, including nested values and their JSON types.
 
 `review` is accepted as a shorter alias for `require_approval`.
 

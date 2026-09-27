@@ -2,6 +2,7 @@ export type JsonPrimitive = string | number | boolean | null;
 export type JsonValue = JsonPrimitive | JsonValue[] | { [key: string]: JsonValue };
 
 export type Decision = "allow" | "deny" | "require_approval";
+export type JsonType = "string" | "number" | "boolean" | "object" | "array" | "null";
 
 export interface ArgumentCondition {
   equals?: JsonValue;
@@ -12,6 +13,7 @@ export interface ArgumentCondition {
   endsWith?: string;
   oneOf?: JsonValue[];
   exists?: boolean;
+  isType?: JsonType;
 }
 
 export interface PolicyMatch {

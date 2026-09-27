@@ -2,7 +2,7 @@ import { isDeepStrictEqual } from "node:util";
 import { normalizeDecision } from "./config.js";
 import type { ArgumentCondition, JsonValue, PolicyResult, ProxyConfig, ToolCall } from "./types.js";
 
-const CONDITION_KEYS = new Set(["equals", "notEquals", "matches", "contains", "startsWith", "endsWith", "oneOf", "exists"]);
+const CONDITION_KEYS = new Set(["equals", "notEquals", "matches", "contains", "startsWith", "endsWith", "oneOf", "exists", "isType"]);
 
 function globToRegExp(glob: string): RegExp {
   const escaped = glob.replace(/[.+^${}()|[\]\\]/g, "\\$&").replace(/\*/g, ".*").replace(/\?/g, ".");
@@ -22,9 +22,16 @@ function isCondition(value: ArgumentCondition | JsonValue): value is ArgumentCon
   return Boolean(value && typeof value === "object" && !Array.isArray(value) && Object.keys(value).some((key) => CONDITION_KEYS.has(key)));
 }
 
+function jsonType(value: JsonValue | undefined): string {
+  if (value === null) return "null";
+  if (Array.isArray(value)) return "array";
+  return typeof value;
+}
+
 function matchesCondition(actual: JsonValue | undefined, expected: ArgumentCondition | JsonValue): boolean {
   if (!isCondition(expected)) return isDeepStrictEqual(actual, expected);
   if (expected.exists !== undefined && expected.exists !== (actual !== undefined)) return false;
+  if (expected.isType !== undefined && expected.isType !== jsonType(actual)) return false;
   if (expected.equals !== undefined && !isDeepStrictEqual(actual, expected.equals)) return false;
   if (expected.notEquals !== undefined && isDeepStrictEqual(actual, expected.notEquals)) return false;
   if (expected.oneOf !== undefined && !expected.oneOf.some((item) => isDeepStrictEqual(actual, item))) return false;

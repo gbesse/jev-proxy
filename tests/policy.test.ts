@@ -43,6 +43,35 @@ test("supports nested argument paths", () => {
   assert.equal(evaluatePolicy(nested, { name: "deploy", arguments: { target: { environment: "production" } } }).decision, "allow");
 });
 
+test("matches JSON payload types without treating them as schemas", () => {
+  const typed: ProxyConfig = {
+    version: 1,
+    default: "deny",
+    rules: [
+      {
+        id: "typed-write",
+        action: "allow",
+        match: {
+          tools: ["write_record"],
+          arguments: {
+            "record.id": { isType: "string" },
+            "record.tags": { isType: "array" },
+            dryRun: { isType: "boolean" },
+          },
+        },
+      },
+    ],
+  };
+  assert.equal(
+    evaluatePolicy(typed, { name: "write_record", arguments: { record: { id: "42", tags: ["reviewed"] }, dryRun: true } }).decision,
+    "allow",
+  );
+  assert.equal(
+    evaluatePolicy(typed, { name: "write_record", arguments: { record: { id: 42, tags: ["reviewed"] }, dryRun: true } }).decision,
+    "deny",
+  );
+});
+
 test("rejects malformed policy operators before the proxy starts", () => {
   assert.throws(
     () =>
@@ -61,6 +90,15 @@ test("rejects malformed policy operators before the proxy starts", () => {
         rules: [{ id: "unsafe", action: "allow", match: { arguments: { command: { oneOf: "read" } } } }],
       }),
     /oneOf must be an array/,
+  );
+  assert.throws(
+    () =>
+      validateConfig({
+        version: 1,
+        default: "deny",
+        rules: [{ id: "unsafe", action: "allow", match: { arguments: { payload: { isType: "integer" } } } }],
+      }),
+    /isType must be/,
   );
   assert.throws(
     () =>
