@@ -61,6 +61,10 @@ move the original command after `--`:
 }
 ```
 
+## Tour four policy outcomes offline
+
+Run `npm run demo:policy` to see a read allowed, an ordinary shell command held for approval, a destructive shell command denied, and an unknown tool denied by default. The example calls only `check`: it does **not** execute any tool or create an approval. Edit the policy file and rerun to inspect your own rules before placing the proxy in front of a server.
+
 ## Policies
 
 Rules are evaluated from top to bottom; the first match wins. Use a deny-by-

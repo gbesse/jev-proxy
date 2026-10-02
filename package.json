@@ -1,6 +1,6 @@
 {
   "name": "jev-proxy",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A policy firewall for MCP tool calls.",
   "type": "module",
   "bin": {
@@ -22,6 +22,7 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
+    "demo:policy": "npm run build && node examples/policy-tour.mjs",
     "check": "tsc --noEmit",
     "test": "node --import tsx --test tests/*.test.ts",
     "test:coverage": "node --import tsx --experimental-test-coverage --test tests/*.test.ts",
