@@ -61,7 +61,9 @@ move the original command after `--`:
 }
 ```
 
-## Tour four policy outcomes offline
+## Tour five policy outcomes offline
+
+`npm run demo:policy` also checks that a proposed filesystem write requires approval. The tour only evaluates policy; it never invokes the tool. / La visite vérifie aussi qu'une écriture demande une approbation, sans exécuter l'outil. / El recorrido comprueba también que una escritura requiere aprobación, sin ejecutar la herramienta.
 
 Run `npm run demo:policy` to see a read allowed, an ordinary shell command held for approval, a destructive shell command denied, and an unknown tool denied by default. The example calls only `check`: it does **not** execute any tool or create an approval. Edit the policy file and rerun to inspect your own rules before placing the proxy in front of a server.
 

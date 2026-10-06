@@ -1,6 +1,6 @@
 {
   "name": "jev-proxy",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "A policy firewall for MCP tool calls.",
   "type": "module",
   "bin": {
