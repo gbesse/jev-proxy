@@ -8,6 +8,7 @@ const policy = resolve(root, 'examples/jev.config.yaml');
 const cases = [
   {name: 'read', tool: 'read_file', arguments: {path: 'README.md'}, expected: 'allow'},
   {name: 'ordinary_shell', tool: 'shell.exec', arguments: {command: 'git status'}, expected: 'require_approval'},
+  {name: 'filesystem_write', tool: 'write_file', arguments: {path: 'notes.txt', content: 'synthetic'}, expected: 'require_approval'},
   {name: 'destructive_shell', tool: 'shell.exec', arguments: {command: 'sudo rm -rf /tmp/example'}, expected: 'deny'},
   {name: 'unknown_tool', tool: 'unknown.tool', arguments: {}, expected: 'deny'},
 ];
