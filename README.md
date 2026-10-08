@@ -181,3 +181,11 @@ closed with an error instead of being interpreted as a broader policy.
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the development contract and
 [SECURITY.md](SECURITY.md) for the supported security boundary and reporting
 instructions.
+
+## October 2026 improvement · Amélioration d’octobre 2026 · Mejora de octubre de 2026
+
+A `notEquals` rule now requires the argument to be present; an omitted field cannot accidentally satisfy an allow rule. Run `npm test` for the policy boundary.
+
+Une règle `notEquals` exige désormais la présence de l’argument ; un champ omis ne peut plus satisfaire par accident une règle d’autorisation. Lancez `npm test` pour vérifier cette frontière.
+
+Una regla `notEquals` ahora exige que el argumento esté presente; un campo omitido no puede satisfacer por accidente una regla de permiso. Ejecute `npm test` para verificarlo.

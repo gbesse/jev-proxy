@@ -32,6 +32,7 @@ function jsonType(value: JsonValue | undefined): string {
 function matchesCondition(actual: JsonValue | undefined, expected: ArgumentCondition | JsonValue): boolean {
   if (!isCondition(expected)) return isDeepStrictEqual(actual, expected);
   if (expected.exists !== undefined && expected.exists !== (actual !== undefined)) return false;
+  if (actual === undefined && Object.keys(expected).some((key) => key !== "exists")) return false;
   if (expected.isType !== undefined && expected.isType !== jsonType(actual)) return false;
   if (expected.equals !== undefined && !isDeepStrictEqual(actual, expected.equals)) return false;
   if (expected.notEquals !== undefined && isDeepStrictEqual(actual, expected.notEquals)) return false;

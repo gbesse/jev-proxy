@@ -56,6 +56,12 @@ test("matches only fields present in the JSON payload", () => {
   );
 });
 
+test("notEquals does not allow a missing argument", () => {
+  const rule: ProxyConfig = { version: 1, default: "deny", rules: [{ id: "non-prod", action: "allow", match: { arguments: { environment: { notEquals: "production" } } } }] };
+  assert.equal(evaluatePolicy(rule, { name: "deploy", arguments: {} }).decision, "deny");
+  assert.equal(evaluatePolicy(rule, { name: "deploy", arguments: { environment: "staging" } }).decision, "allow");
+});
+
 test("matches JSON payload types without treating them as schemas", () => {
   const typed: ProxyConfig = {
     version: 1,
