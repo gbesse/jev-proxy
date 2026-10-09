@@ -189,3 +189,7 @@ A `notEquals` rule now requires the argument to be present; an omitted field can
 Une règle `notEquals` exige désormais la présence de l’argument ; un champ omis ne peut plus satisfaire par accident une règle d’autorisation. Lancez `npm test` pour vérifier cette frontière.
 
 Una regla `notEquals` ahora exige que el argumento esté presente; un campo omitido no puede satisfacer por accidente una regla de permiso. Ejecute `npm test` para verificarlo.
+
+## Contrôle d’adoption · Adoption check · Comprobación de adopción
+
+[Français : essayer un cas concret](examples/adoption-check.md) · [English: try a concrete case](examples/adoption-check.md) · [Español: pruebe un caso concreto](examples/adoption-check.md).
