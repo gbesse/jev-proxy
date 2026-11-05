@@ -193,3 +193,12 @@ Una regla `notEquals` ahora exige que el argumento esté presente; un campo omit
 ## Contrôle d’adoption · Adoption check · Comprobación de adopción
 
 [Français : essayer un cas concret](examples/adoption-check.md) · [English: try a concrete case](examples/adoption-check.md) · [Español: pruebe un caso concreto](examples/adoption-check.md).
+
+
+## 2026-11-05 — FR / EN / ES
+
+FR : Le journal d’approbations utilise un verrou fichier exclusif pendant attribution et consommation :20 consommations concurrentes ne peuvent plus utiliser le même reçu. Chemin canonique identique requis entre processus. Verrou abandonné après crash : échec fermé après5s, retrait manuel après vérification du propriétaire ; aucune suppression automatique dangereuse.
+
+EN: Approval journal uses an exclusive file lock during grant and consume:20 concurrent consumers cannot reuse one receipt. Processes must use the same canonical path. Crash-abandoned lock fails closed after5s; remove manually after owner verification, never automatically.
+
+ES: Registro de aprobaciones usa bloqueo exclusivo al conceder y consumir:20 consumidores concurrentes no reutilizan recibo. Procesos deben usar mismo camino canónico. Bloqueo abandonado tras fallo cierra tras5s; retirar manualmente verificando propietario, nunca automáticamente.
