@@ -202,3 +202,12 @@ FR : Le journal d’approbations utilise un verrou fichier exclusif pendant attr
 EN: Approval journal uses an exclusive file lock during grant and consume:20 concurrent consumers cannot reuse one receipt. Processes must use the same canonical path. Crash-abandoned lock fails closed after5s; remove manually after owner verification, never automatically.
 
 ES: Registro de aprobaciones usa bloqueo exclusivo al conceder y consumir:20 consumidores concurrentes no reutilizan recibo. Procesos deben usar mismo camino canónico. Bloqueo abandonado tras fallo cierra tras5s; retirar manualmente verificando propietario, nunca automáticamente.
+
+
+## 2026-11-12 — FR / EN / ES
+
+FR : Révoquer une approbation encore non consommée sous le même verrou que sa consommation ; ne pas prétendre annuler une action déjà lancée.
+
+EN: Revoke unconsumed approvals under the consumption lock; do not claim to undo already-started actions.
+
+ES: Revocar aprobaciones no consumidas bajo el mismo bloqueo; no afirmar deshacer acciones ya iniciadas.
